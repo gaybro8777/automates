@@ -9,17 +9,18 @@ RUN pip3 install pillow
 RUN pip3 install python-Levenshtein
 
 # Attempting install of tools necessary for PDFLatex
-RUN apt-get -y install texlive-latex-base
+# RUN apt-get -y install texlive-latex-base
 
 # Attempting ImageMagick install
-RUN apt-get install -y build-essential checkinstall && apt-get build-dep imagemagick -y
-RUN apt-get -y install wget
-RUN wget https://www.imagemagick.org/download/ImageMagick.tar.gz
-RUN tar xf ImageMagick.tar.gz
-WORKDIR /ImageMagick-7
-RUN /ImageMagick-7.0.8-23/configure && make
-RUN make install
-RUN ldconfig /usr/local/lib
+# RUN apt-get install -y build-essential checkinstall && apt-get build-dep imagemagick -y
+# RUN apt-get -y install wget
+# RUN wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+# RUN tar xf ImageMagick.tar.gz
+# WORKDIR /ImageMagick-7
+# RUN /ImageMagick-7.0.8-23/configure && make
+# RUN make install
+# RUN ldconfig /usr/local/lib
+
 # RUN checkinstall    # The install instructions said to do this, but I believe those are out of date
 
 # Attempting to install Harvards distance module
@@ -30,12 +31,13 @@ WORKDIR /distance
 RUN python setup.py install
 
 # Installing webkit2png
-RUN apt-get -y install libwebkit-dev
-WORKDIR /usr/local/bin
-RUN wget https://raw.githubusercontent.com/paulhammond/webkit2png/master/webkit2png
-RUN chmod a+x /usr/local/bin/webkit2png
+# RUN apt-get -y install libwebkit-dev
+# WORKDIR /usr/local/bin
+# RUN wget https://raw.githubusercontent.com/paulhammond/webkit2png/master/webkit2png
+# RUN chmod a+x /usr/local/bin/webkit2png
 
 # Installing luarocks and necessary packages
+WORKDIR /
 RUN apt-get -y install luarocks
 RUN luarocks install tds
 RUN luarocks install class
@@ -48,4 +50,4 @@ RUN git clone https://github.com/harvardnlp/im2markup.git
 WORKDIR /im2markup
 
 # I didn't really know what else to use as a test command
-CMD ["th", "src/train.lua", "-h"]
+CMD ["lua", "src/model/model.lua"]
